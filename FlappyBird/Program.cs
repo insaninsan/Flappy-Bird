@@ -1,11 +1,15 @@
+using Avalonia;
+
 namespace FlappyBird;
 
 internal static class Program
 {
     [STAThread]
-    private static void Main()
-    {
-        ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
-    }
+    public static void Main(string[] args) =>
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+
+    public static AppBuilder BuildAvaloniaApp() =>
+        AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .LogToTrace();
 }
