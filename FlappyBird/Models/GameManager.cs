@@ -1,3 +1,5 @@
+using Avalonia;
+
 namespace FlappyBird.Models;
 
 public enum GameState
@@ -20,9 +22,9 @@ public class GameManager
     private const int PipeSpacing = 230;  // İki boru arasındaki yatay mesafe
     private const int GapSize = 160;
     private const int MinGapMargin = 60;  // Boşluğun ekran kenarına en fazla ne kadar yaklaşabileceği
-    private const float StartSpeed = 3.5f;
-    private const float SpeedIncrease = 0.5f;
-    private const float MaxSpeed = 9f;
+    private const double StartSpeed = 3.5;
+    private const double SpeedIncrease = 0.5;
+    private const double MaxSpeed = 9;
 
     private readonly Random random = new();
     private readonly List<PipePair> pipes = new();
@@ -34,7 +36,7 @@ public class GameManager
         Height = height;
         this.highScoreStore = highScoreStore;
 
-        Bird = new Bird(width / 4f, PlayAreaHeight / 2f);
+        Bird = new Bird(width / 4.0, PlayAreaHeight / 2.0);
         for (int i = 0; i < PipeCount; i++)
             pipes.Add(new PipePair(0, 0, GapSize, PlayAreaHeight));
 
@@ -58,7 +60,7 @@ public class GameManager
     public GameState State { get; private set; }
     public int Score { get; private set; }
     public int HighScore { get; private set; }
-    public float Speed { get; private set; }
+    public double Speed { get; private set; }
     public int Level => Score / PointsPerLevel + 1;
     public bool IsNewHighScore { get; private set; }
 
@@ -90,7 +92,7 @@ public class GameManager
             Bird.Flap();
     }
 
-    /// <summary>Oyun döngüsünün bir adımı. Form'daki Timer her tick'te çağırır.</summary>
+    /// <summary>Oyun döngüsünün bir adımı. Penceredeki timer her tick'te çağırır.</summary>
     public void Update()
     {
         if (State != GameState.Playing)
@@ -121,7 +123,7 @@ public class GameManager
 
     private bool CheckCollision()
     {
-        RectangleF hitBox = Bird.HitBox;
+        Rect hitBox = Bird.HitBox;
 
         if (hitBox.Bottom >= PlayAreaHeight)
             return true;  // Zemine çarptı

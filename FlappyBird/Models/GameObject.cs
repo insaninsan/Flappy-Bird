@@ -1,3 +1,6 @@
+using Avalonia;
+using Avalonia.Media;
+
 namespace FlappyBird.Models;
 
 /// <summary>
@@ -6,7 +9,7 @@ namespace FlappyBird.Models;
 /// </summary>
 public abstract class GameObject
 {
-    protected GameObject(float x, float y, int width, int height)
+    protected GameObject(double x, double y, int width, int height)
     {
         X = x;
         Y = y;
@@ -14,17 +17,17 @@ public abstract class GameObject
         Height = height;
     }
 
-    public float X { get; protected set; }
-    public float Y { get; protected set; }
+    public double X { get; protected set; }
+    public double Y { get; protected set; }
     public int Width { get; }
     public int Height { get; }
 
     /// <summary>Nesnenin ekranda kapladığı dikdörtgen.</summary>
-    public RectangleF Bounds => new(X, Y, Width, Height);
+    public Rect Bounds => new(X, Y, Width, Height);
 
-    /// <summary>Her oyun karesinde (Timer tick) bir kez çağrılır.</summary>
+    /// <summary>Her oyun karesinde (timer tick) bir kez çağrılır.</summary>
     public abstract void Update();
 
-    /// <summary>Nesneyi verilen Graphics yüzeyine çizer.</summary>
-    public abstract void Draw(Graphics g);
+    /// <summary>Nesneyi verilen çizim yüzeyine çizer.</summary>
+    public abstract void Draw(DrawingContext context);
 }
