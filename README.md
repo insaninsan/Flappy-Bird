@@ -79,5 +79,5 @@ FlappyBird/
 
 ## Öğrenci
 
-- **Ad Soyad:** _<Adınız Soyadınız>_
-- **Öğrenci No:** _<Öğrenci numaranız>_
+- **Ad Soyad:** Şerif Bayram
+- **Öğrenci No:** 225541018
