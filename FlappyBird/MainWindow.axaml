@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="using:FlappyBird"
+        x:Class="FlappyBird.MainWindow"
+        Title="YMH219 - Flappy Bird"
+        SizeToContent="WidthAndHeight"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Styles>
+        <Style Selector="TextBlock.info">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Styles>
+
+    <DockPanel>
+        <!-- Üst bilgi çubuğu -->
+        <Border DockPanel.Dock="Top" Background="#2D2D30" Padding="8">
+            <StackPanel Orientation="Horizontal" Spacing="18">
+                <Button x:Name="NewGameButton"
+                        Content="Yeni Oyun"
+                        Focusable="False"
+                        Click="NewGameButton_Click" />
+                <TextBlock x:Name="ScoreText" Classes="info" />
+                <TextBlock x:Name="HighScoreText" Classes="info" />
+                <TextBlock x:Name="LevelText" Classes="info" />
+            </StackPanel>
+        </Border>
+
+        <!-- Alt durum çubuğu -->
+        <Border DockPanel.Dock="Bottom" Background="#EEEEEE" Padding="8,4">
+            <TextBlock x:Name="StatusText" FontSize="12" />
+        </Border>
+
+        <!-- Oyun alanı -->
+        <local:GameCanvas x:Name="GameView" Width="480" Height="640" />
+    </DockPanel>
+</Window>
