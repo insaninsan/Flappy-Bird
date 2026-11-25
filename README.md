@@ -1,31 +1,31 @@
 # YMH219 - Flappy Bird
 
-Nesne Tabanlı Programlama (YMH 219) dersi ek uygulama ödevi. Windows Forms üzerinde, Timer ile çalışan bir oyun döngüsü ve klavye olayları kullanılarak geliştirilmiş Flappy Bird benzeri bir masaüstü oyunu.
+Nesne Tabanlı Programlama (YMH 219) dersi ek uygulama ödevi. Avalonia UI ile, zamanlayıcı (DispatcherTimer) ile çalışan bir oyun döngüsü ve klavye olayları kullanılarak geliştirilmiş Flappy Bird benzeri bir masaüstü oyunu. Windows, macOS ve Linux'ta çalışır.
 
 Kuş, tuşa basıldığında yukarı zıplar ve yer çekimiyle aşağı düşer. Amaç, sağdan sola gelen boruların arasındaki boşluklardan geçerek puan toplamaktır.
 
 ## Kullanılan Teknolojiler
 
-- C# / .NET 8 (`net8.0-windows`)
-- Windows Forms
-- GDI+ (`System.Drawing`) ile çizim
-- Harici NuGet paketi kullanılmamıştır.
+- C# / .NET 8
+- [Avalonia UI](https://avaloniaui.net/) 11.2 — çapraz platform masaüstü arayüz kütüphanesi
+- NuGet paketleri: `Avalonia`, `Avalonia.Desktop`, `Avalonia.Themes.Fluent`
+- Çizim: Avalonia `DrawingContext` (özel `Control` üzerinde `Render`)
+
+> Ders föyünde ortam olarak Windows Forms belirtilmiştir; dersin hocasından WinForms'un zorunlu olmadığı onayı alınarak macOS'ta da çalışabilmesi için Avalonia tercih edilmiştir.
 
 ## Kurulum ve Çalıştırma
 
-**Gereksinimler:** Windows 10/11, Visual Studio 2022 (".NET masaüstü geliştirme" iş yükü) veya .NET 8 SDK.
-
-Visual Studio ile:
-
-1. Depoyu klonlayın: `git clone https://github.com/<kullanici-adi>/YMH219-FlappyBird.git`
-2. `FlappyBird.sln` dosyasını Visual Studio ile açın.
-3. `F5` ile derleyip çalıştırın.
+**Gereksinimler:** [.NET 8 SDK](https://dotnet.microsoft.com/download) (Windows, macOS veya Linux). NuGet paketleri ilk derlemede otomatik indirilir.
 
 Komut satırı ile:
 
 ```bash
+git clone https://github.com/insaninsan/Flappy-Bird.git
+cd Flappy-Bird
 dotnet run --project FlappyBird
 ```
+
+Visual Studio 2022 / JetBrains Rider ile: `FlappyBird.sln` dosyasını açıp çalıştırın.
 
 ## Kontroller
 
@@ -50,8 +50,10 @@ dotnet run --project FlappyBird
 ```
 FlappyBird/
 ├── Program.cs              Uygulamanın giriş noktası
-├── MainForm.cs             Arayüz, Timer döngüsü, klavye olayları ve çizim
-├── GameCanvas.cs           Titreşimsiz (double-buffered) çizim yüzeyi
+├── App.axaml(.cs)          Uygulama ve tema tanımı
+├── MainWindow.axaml        Pencere düzeni: üst bilgi çubuğu, oyun alanı, durum çubuğu
+├── MainWindow.axaml.cs     Zamanlayıcı döngüsü, klavye/fare olayları, bilgi güncelleme
+├── GameCanvas.cs           Oyunun çizildiği özel kontrol (arka plan, zemin, yazılar)
 └── Models/
     ├── GameObject.cs       Konumu olan ve çizilebilen nesnelerin soyut taban sınıfı
     ├── Bird.cs             Kuş: yer çekimi, zıplama, çarpışma kutusu
@@ -60,7 +62,7 @@ FlappyBird/
     └── HighScoreStore.cs   En yüksek skoru dosyaya okuma/yazma
 ```
 
-`GameManager` arayüzden bağımsızdır: form yalnızca her Timer tick'inde `Update()` çağırır, `ScoreChanged` ve `StateChanged` olaylarını dinleyerek etiketleri günceller.
+`GameManager` arayüzden bağımsızdır: pencere yalnızca her zamanlayıcı tick'inde `Update()` çağırır, `ScoreChanged` ve `StateChanged` olaylarını dinleyerek etiketleri günceller.
 
 ## Ekran Görüntüleri
 
@@ -70,10 +72,10 @@ FlappyBird/
 
 ## Bilinen Sınırlamalar / Geliştirme Notları
 
-- Oyun döngüsü `System.Windows.Forms.Timer` ile çalışır (20 ms aralık); bu zamanlayıcının çözünürlüğü sınırlı olduğundan kare hızı bilgisayara göre hafifçe değişebilir.
+- Oyun döngüsü `DispatcherTimer` ile 20 ms aralıkla çalışır; fizik kare başına hesaplandığından kare hızı düşerse oyun da yavaşlar.
 - Oyun alanı sabit boyuttadır (480×640); pencere yeniden boyutlandırılamaz.
 - Ses efekti yoktur.
-- En yüksek skor `%LOCALAPPDATA%\YMH219-FlappyBird\highscore.txt` dosyasında tutulur. Dosyaya erişilemezse kullanıcıya uyarı gösterilir ve oyun skor kaydetmeden devam eder.
+- En yüksek skor kullanıcının yerel uygulama veri klasöründe tutulur (Windows: `%LOCALAPPDATA%\YMH219-FlappyBird\highscore.txt`, macOS/Linux: `~/.local/share/YMH219-FlappyBird/highscore.txt`). Dosyaya erişilemezse durum çubuğunda uyarı gösterilir ve oyun skor kaydetmeden devam eder.
 
 ## Öğrenci
 
