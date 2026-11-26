@@ -33,6 +33,7 @@ Visual Studio 2022 / JetBrains Rider ile: `FlappyBird.sln` dosyasını açıp ç
 |---|---|
 | `Space` / `↑` / `W` / sol tık | Zıpla (hazır ekranında oyunu başlatır) |
 | `Enter` / `R` | Oyun bittikten sonra yeniden başlat |
+| `P` / `Esc` | Oyunu duraklat / devam ettir (pencere arka plana geçince oyun kendiliğinden duraklar) |
 | **Yeni Oyun** butonu | Oyunu her an sıfırdan başlat |
 
 ## Özellikler
@@ -42,6 +43,7 @@ Visual Studio 2022 / JetBrains Rider ile: `FlappyBird.sln` dosyasını açıp ç
 - Boruya veya zemine çarpınca oyun durur ve **Game Over** ekranı gösterilir.
 - Her geçilen boru için 1 puan.
 - Her 5 puanda bir seviye atlanır ve oyun hızlanır.
+- Oyun P / Esc ile duraklatılıp devam ettirilebilir; başka bir pencereye geçildiğinde kendiliğinden duraklar.
 - En yüksek skor dosyada saklanır ve uygulama yeniden açıldığında korunur.
 - Üst çubukta skor, en yüksek skor ve seviye; alt durum çubuğunda oyun durumu ve hız gösterilir.
 

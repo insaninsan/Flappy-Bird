@@ -44,6 +44,7 @@ public partial class MainWindow : Window
         GameView.PointerPressed += GameView_PointerPressed;
         Opened += MainWindow_Opened;
         Closed += MainWindow_Closed;
+        Deactivated += MainWindow_Deactivated;
 
         UpdateInfo();
     }
@@ -57,6 +58,13 @@ public partial class MainWindow : Window
     }
 
     private void MainWindow_Closed(object? sender, EventArgs e) => gameTimer.Stop();
+
+    /// <summary>Pencere arka plana geçerse (başka uygulamaya geçildi) oyun kendiliğinden duraklar.</summary>
+    private void MainWindow_Deactivated(object? sender, EventArgs e)
+    {
+        if (game.State == GameState.Playing)
+            game.TogglePause();
+    }
 
     private void GameTimer_Tick(object? sender, EventArgs e)
     {
@@ -91,6 +99,12 @@ public partial class MainWindow : Window
             case Key.R:
                 if (game.State == GameState.GameOver)
                     StartNewGame();
+                e.Handled = true;
+                break;
+
+            case Key.P:
+            case Key.Escape:
+                game.TogglePause();
                 e.Handled = true;
                 break;
         }
@@ -133,7 +147,8 @@ public partial class MainWindow : Window
         string status = game.State switch
         {
             GameState.Ready => "Hazır — başlamak için SPACE / ↑ tuşuna bas veya tıkla",
-            GameState.Playing => $"Oynanıyor — hız: {game.Speed:0.0}",
+            GameState.Playing => $"Oynanıyor — hız: {game.Speed:0.0}   (P: duraklat)",
+            GameState.Paused => "Duraklatıldı — devam etmek için P / Esc tuşuna bas",
             GameState.GameOver => "Oyun bitti — yeniden başlamak için Enter / R veya Yeni Oyun",
             _ => string.Empty,
         };

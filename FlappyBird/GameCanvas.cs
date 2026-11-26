@@ -63,6 +63,13 @@ public class GameCanvas : Control
                 DrawCenteredText(context, Game.Score.ToString(), 44, BoldFont, 30);
                 break;
 
+            case GameState.Paused:
+                DrawCenteredText(context, Game.Score.ToString(), 44, BoldFont, 30);
+                context.FillRectangle(OverlayBrush, new Rect(40, 200, Bounds.Width - 80, 150));
+                DrawCenteredText(context, "Duraklatıldı", 40, BoldFont, 220);
+                DrawCenteredText(context, "Devam etmek için P / Esc", 16, NormalFont, 295);
+                break;
+
             case GameState.GameOver:
                 DrawGameOver(context);
                 break;

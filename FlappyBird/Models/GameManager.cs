@@ -6,6 +6,7 @@ public enum GameState
 {
     Ready,     // Oyun başlamayı bekliyor
     Playing,   // Oyun devam ediyor
+    Paused,    // Oyuncu oyunu duraklattı
     GameOver,  // Kuş çarptı, oyun durdu
 }
 
@@ -83,6 +84,15 @@ public class GameManager
     }
 
     /// <summary>Oyuncu zıplama tuşuna bastığında çağrılır. Hazır durumdaysa oyunu da başlatır.</summary>
+    /// <summary>Oyun sürüyorsa duraklatır, duraklatılmışsa devam ettirir. Diğer durumlarda bir şey yapmaz.</summary>
+    public void TogglePause()
+    {
+        if (State == GameState.Playing)
+            ChangeState(GameState.Paused);
+        else if (State == GameState.Paused)
+            ChangeState(GameState.Playing);
+    }
+
     public void Flap()
     {
         if (State == GameState.Ready)
